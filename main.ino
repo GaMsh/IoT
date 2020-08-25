@@ -18,6 +18,7 @@ void loop()
   previousMillis = currentMillis;
   taskRestart(currentMillis, previousMillisReboot);
   previousMillisConfig = taskConfig(currentMillis, previousMillisConfig);
+  
 //  mainProcess();
 
   if (currentMillis - previousMillisPing >= PING_INTERVAL) {
@@ -39,11 +40,14 @@ void loop()
   int n = WiFi.scanComplete();
   if(n >= 0)
   {
+    String wifiList = "";
     Serial.printf("%d network(s) found\n", n);
     for (int i = 0; i < n; i++)
     {
       Serial.printf("%d: %s, Ch:%d (%ddBm) %s\n", i+1, WiFi.SSID(i).c_str(), WiFi.channel(i), WiFi.RSSI(i), WiFi.encryptionType(i) == ENC_TYPE_NONE ? "open" : "");
+      wifiList += String(WiFi.SSID(i).c_str()) + ":" + String(WiFi.channel(i)) + ":" + String(WiFi.RSSI(i)) + ":" + String(WiFi.encryptionType(i)) + ";";
     }
+    callServer("W", "", wifiList);
     WiFi.scanDelete();
   }
 

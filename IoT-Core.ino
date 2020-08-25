@@ -70,7 +70,7 @@ int BUFFER_COUNT = 0; // счётчик строк в буферном файл�
 
 const char* DEVICE_MODEL = "IoT";
 const char* DEVICE_REVISION = "alpha"; 
-const char* DEVICE_FIRMWARE = "0.1.0";
+const char* DEVICE_FIRMWARE = "0.2.1";
 
 const int RESET_WIFI = 0; // D3
 const int LED_EXTERNAL = 2;
@@ -87,6 +87,7 @@ String OsMoSSLFingerprint = "";
 String TOKEN = "";
 
 int bytesWriten = 0;
+int pingCount = 0;
 
 // WifiManager callback
 void configModeCallback(WiFiManager *myWiFiManager) 
