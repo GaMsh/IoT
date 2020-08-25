@@ -19,13 +19,13 @@ int taskConfig(int currentMillis, int previousMillisConfig) {
 }
 
 void mainProcess() {
-  String string = "";
-    
-  if (NO_SERVER) {
-    bufferWrite("test", string);
-  } else {
-    callServer("D", String(TOKEN), string);
-  }
+//  String string = "";
+//    
+//  if (NO_SERVER) {
+//    bufferWrite("test", string);
+//  } else {
+//    callServer("D", String(TOKEN), string);
+//  }
 }
 
 void actionDo(String urlString) {
@@ -74,11 +74,13 @@ boolean callToServer(String urlString) {
 }
 
 void pingServer() {
-  callServer("P", String(int(millis()/5000)) + "|" + String(WiFi.RSSI()), "");
+  callServer("P", String(int(millis()/5000)), String(WiFi.RSSI()));
   Serial.println("Ping");
 }
 
 void callServer(String command, String string, String data) {
+  Serial.println(command + ":" + string + "|" + data);
+  
   udp.beginPacket(OSMO_SERVER_HOST, OSMO_SERVER_PORT);
   if (data != "") {
     udp.print(command + ":" + string + "|" + data);

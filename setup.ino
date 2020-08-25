@@ -58,13 +58,6 @@ void setup()
       if (portMappingAdded) {
         UPnP = true;
       }
-    
-//      if (!portMappingAdded) {
-//        // for debugging, you can see this in your router too under forwarding or UPnP
-//        tinyUPnP.printAllPortMappings();
-//        Serial.println(F("This was printed because adding the required port mapping failed"));
-//        delay(30000);  // 30 seconds before trying again
-//      }
     }
     Serial.println("UPnP done");
 
@@ -81,12 +74,6 @@ void setup()
     tickOffAll();
     ticker1.attach_ms(100, tickInternal);
 
-    if (bufferCount("data") > 0) {
-      Serial.println();
-      Serial.println("Buffer count: " + bufferCount("data"));
-      MODE_SEND_BUFFER = true;
-    }
-
     Wire.begin();
   }
 
@@ -98,4 +85,7 @@ void setup()
   delay(500);
   digitalWrite(BUILTIN_LED, HIGH);
   analogWrite(LED_EXTERNAL, LED_BRIGHT);
+
+  ticker1.attach_ms(3000, tickInternal);
+  ticker2.attach_ms(6000, tickExternal, MAIN_MODE_NORMAL);
 }

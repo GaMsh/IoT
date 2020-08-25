@@ -18,7 +18,7 @@ void loop()
   previousMillis = currentMillis;
   taskRestart(currentMillis, previousMillisReboot);
   previousMillisConfig = taskConfig(currentMillis, previousMillisConfig);
-  mainProcess();
+//  mainProcess();
 
   if (currentMillis - previousMillisPing >= PING_INTERVAL) {
     previousMillisPing = currentMillis;

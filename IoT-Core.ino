@@ -54,7 +54,7 @@ boolean STATUS_REPORT_SEND = false;
 boolean UDP_MODE = true; // переключение устройства в режим постоянной связи
 boolean UPnP = false; // флаг того, что роутер открыл нам прямую связь на порт
 
-int LOCAL_PORT = 10125; // локальный порт для UDP
+int LOCAL_PORT = 10142; // локальный порт для UDP
 int PING_INTERVAL = 6000; // интервал пинга сервера по UDP по умолчанию
 int LED_BRIGHT = 200; // яркость внешнего светодиода в режиме ожидания
 int REBOOT_INTERVAL = 6 * 60 * 60000; // интервал принудительной перезагрузки устройства, мы не перезагружаемся, если нет сети, чтобы не потерять время и возможность накапливать буфер
@@ -73,7 +73,7 @@ const char* DEVICE_REVISION = "alpha";
 const char* DEVICE_FIRMWARE = "0.1.0";
 
 const int RESET_WIFI = 0; // D3
-const int LED_EXTERNAL = 14; // D5
+const int LED_EXTERNAL = 2;
 
 unsigned long previousMillis = 0;
 unsigned long previousMillisConfig = 0;
