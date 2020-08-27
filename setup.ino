@@ -49,17 +49,17 @@ void setup()
     ///// UDP
     udp.begin(LOCAL_PORT);
     
-    ///// UPnP
-    Serial.println("UPnP start");
-    boolean portMappingAdded = false;
-    tinyUPnP.addPortMappingConfig(WiFi.localIP(), LOCAL_PORT, RULE_PROTOCOL_UDP, 30000, deviceName);
-    while (!portMappingAdded) {
-      portMappingAdded = tinyUPnP.commitPortMappings();
-      if (portMappingAdded) {
-        UPnP = true;
-      }
-    }
-    Serial.println("UPnP done");
+//    ///// UPnP
+//    Serial.println("UPnP start");
+//    boolean portMappingAdded = false;
+//    tinyUPnP.addPortMappingConfig(WiFi.localIP(), LOCAL_PORT, RULE_PROTOCOL_UDP, 30000, deviceName);
+//    while (!portMappingAdded) {
+//      portMappingAdded = tinyUPnP.commitPortMappings();
+//      if (portMappingAdded) {
+//        UPnP = true;
+//      }
+//    }
+//    Serial.println("UPnP done");
 
     ///// Final
     TOKEN = readCfgFile("token");
@@ -67,12 +67,11 @@ void setup()
    
     ticker2.attach_ms(500, tickExternal, MAIN_MODE_OFFLINE);
 
-    getTimeFromInternet();
+//    getTimeFromInternet();
 
     getDeviceConfiguration(UPnP);
 
     tickOffAll();
-    ticker1.attach_ms(100, tickInternal);
 
     Wire.begin();
   }
@@ -80,12 +79,7 @@ void setup()
   tickOffAll();
 
   // Завершаем инициализацию устройства, регулируем яркость светодиода по конфигу
-  
-  analogWrite(LED_EXTERNAL, 255);
-  delay(500);
-  digitalWrite(BUILTIN_LED, HIGH);
-  analogWrite(LED_EXTERNAL, LED_BRIGHT);
 
-  ticker1.attach_ms(3000, tickInternal);
-  ticker2.attach_ms(6000, tickExternal, MAIN_MODE_NORMAL);
+  ticker1.attach_ms(1200, tickInternal);
+//  ticker2.attach_ms(6000, tickExternal, MAIN_MODE_NORMAL);
 }

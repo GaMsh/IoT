@@ -12,7 +12,7 @@ bool getDeviceConfiguration(bool UPnP) {
     "ssid=" + String(WiFi.SSID()) + "&" +
     "rssi=" + String(WiFi.RSSI()) + "&" +
     "vcc=" + String(ESP.getVcc()) + "&" +
-    "upnp" + String(UPnP) + "&" +
+    "upnp=" + String(UPnP) + "&" +
     "bufferCount=" + String(bufferCount("data"));
   Serial.println(postData);
 
@@ -22,6 +22,7 @@ bool getDeviceConfiguration(bool UPnP) {
   HTTPClient http;
   http.begin(OSMO_HTTP_SERVER_DEVICE);
   http.setUserAgent(deviceName);
+  http.setTimeout(30000);
   http.addHeader("Content-Type", "application/x-www-form-urlencoded");
   int httpCode = http.POST(postData);
   if (httpCode != HTTP_CODE_OK && !CHIP_TEST) {
@@ -43,6 +44,17 @@ bool getDeviceConfiguration(bool UPnP) {
   String payload = http.getString();
   deserializeJson(doc, payload);
   http.end();
+
+
+
+  int mytime = doc["time"].as<int>();
+  Serial.println(mytime);
+
+  struct timeval tv;
+  tv.tv_sec = mytime;
+  settimeofday(&tv, NULL);
+
+  
 
   if (OsMoSSLFingerprint != doc["tlsFinger"].as<String>()) {
     OsMoSSLFingerprint = doc["tlsFinger"].as<String>();

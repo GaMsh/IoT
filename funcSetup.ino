@@ -88,7 +88,7 @@ int writeCfgFile(String configVar, String value) {
   File file = LittleFS.open("/" + configVar + ".cfg", "w");
   if (file) {
     Serial.println("Write file " + configVar + ".cfg");
-    bytesWriten = file.print(value);
+    int bytesWriten = file.print(value);
     if (bytesWriten > 0) {
       Serial.print("File was written: ");
       Serial.println(bytesWriten);

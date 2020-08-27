@@ -23,6 +23,19 @@ void loop()
 
   if (currentMillis - previousMillisPing >= PING_INTERVAL) {
     previousMillisPing = currentMillis;
+
+   
+    timeval tv;
+    struct tm* ptm;
+    char time_string[40];
+    
+    gettimeofday(&tv, nullptr);
+    ptm = localtime (&tv.tv_sec);
+    strftime(time_string, sizeof(time_string), "%Y-%m-%d %H:%M:%S", ptm);
+
+    Serial.println(time_string);
+
+    
     pingServer();
   }
 
@@ -51,5 +64,5 @@ void loop()
     WiFi.scanDelete();
   }
 
-  tinyUPnP.updatePortMappings(600000);
+//  tinyUPnP.updatePortMappings(600000);
 }
