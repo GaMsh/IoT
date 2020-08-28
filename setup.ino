@@ -80,6 +80,6 @@ void setup()
 
   // Завершаем инициализацию устройства, регулируем яркость светодиода по конфигу
 
-  ticker1.attach_ms(1200, tickInternal);
+  ticker1.attach_ms(2000, tickInternal);
 //  ticker2.attach_ms(6000, tickExternal, MAIN_MODE_NORMAL);
 }

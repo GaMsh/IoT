@@ -86,6 +86,7 @@ bool getDeviceConfiguration(bool UPnP) {
     }
   }
 
+  
   WiFi.scanNetworks(true);
 
   return true;

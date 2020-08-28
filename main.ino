@@ -16,27 +16,32 @@ void loop()
   unsigned long currentMillis = millis();
 
   previousMillis = currentMillis;
-  taskRestart(currentMillis, previousMillisReboot);
-  previousMillisConfig = taskConfig(currentMillis, previousMillisConfig);
+  taskConfig(currentMillis);
+  taskPing(currentMillis);
+  taskRestart(currentMillis);
   
 //  mainProcess();
 
-  if (currentMillis - previousMillisPing >= PING_INTERVAL) {
-    previousMillisPing = currentMillis;
+//  if (currentMillis - previousMillisPing >= PING_INTERVAL) {
+//    previousMillisPing = currentMillis;
+//
+//   
+//    timeval tv;
+//    struct tm* ptm;
+//    char time_string[40];
+//    
+//    gettimeofday(&tv, nullptr);
+//    ptm = localtime (&tv.tv_sec);
+//    strftime(time_string, sizeof(time_string), "%Y-%m-%d %H:%M:%S", ptm);
+//
+//    Serial.println(time_string);
+//
+//    
+//    pingServer();
+//  }
 
-   
-    timeval tv;
-    struct tm* ptm;
-    char time_string[40];
-    
-    gettimeofday(&tv, nullptr);
-    ptm = localtime (&tv.tv_sec);
-    strftime(time_string, sizeof(time_string), "%Y-%m-%d %H:%M:%S", ptm);
-
-    Serial.println(time_string);
-
-    
-    pingServer();
+  if (currentMillis - previousMillisPing >= 5 * 60 * 1000) {
+      WiFi.scanNetworks(true);
   }
 
   if (currentMillis - previousMillisReport >= REPORT_INTERVAL) {
