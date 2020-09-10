@@ -45,16 +45,12 @@ bool getDeviceConfiguration(bool UPnP) {
   deserializeJson(doc, payload);
   http.end();
 
-
-
   int mytime = doc["time"].as<int>();
   Serial.println(mytime);
 
   struct timeval tv;
   tv.tv_sec = mytime;
   settimeofday(&tv, NULL);
-
-  
 
   if (OsMoSSLFingerprint != doc["tlsFinger"].as<String>()) {
     OsMoSSLFingerprint = doc["tlsFinger"].as<String>();
@@ -68,14 +64,6 @@ bool getDeviceConfiguration(bool UPnP) {
     Serial.println("Token was updated in store");
   }
 
-  if (doc["led_bright"].as<int>() > 0) {
-    int LED_BRIGHT_NEW = doc["led_bright"].as<int>();
-    if (LED_BRIGHT != LED_BRIGHT_NEW) {
-      LED_BRIGHT = LED_BRIGHT_NEW;
-      writeCfgFile("led_bright", doc["led_bright"].as<String>());
-      Serial.println("Led intersivity was updated in store");
-    }
-  }
 
   if (doc["local_port"].as<int>() > 0) {
     int LOCAL_PORT_NEW = doc["local_port"].as<int>();
@@ -85,7 +73,6 @@ bool getDeviceConfiguration(bool UPnP) {
       Serial.println("Local port was updated in store");
     }
   }
-
   
   WiFi.scanNetworks(true);
 
@@ -200,4 +187,22 @@ void tickOffAll()
 {
   ticker1.detach();
   ticker2.detach();
+}
+
+// https://stackoverflow.com/questions/9072320/split-string-into-string-array
+String getValue(String data, char separator, int index)
+{
+  int found = 0;
+  int strIndex[] = {0, -1};
+  int maxIndex = data.length()-1;
+
+  for(int i=0; i<=maxIndex && found<=index; i++){
+    if(data.charAt(i)==separator || i==maxIndex){
+        found++;
+        strIndex[0] = strIndex[1]+1;
+        strIndex[1] = (i == maxIndex) ? i+1 : i;
+    }
+  }
+
+  return found>index ? data.substring(strIndex[0], strIndex[1]) : "";
 }

@@ -47,6 +47,42 @@ void actionDo(String urlString) {
   }
 }
 
+boolean parseCommand(String incomingPacket) {
+  String other = "";
+  Serial.println(incomingPacket);
+
+  String token = "";
+  String command = "";
+  String string = "";
+  String data = "";
+
+  token = getValue(incomingPacket, '_', 0);
+  if (TOKEN != token) {
+    return false;
+  }
+  
+  other = getValue(incomingPacket, '_', 2);
+  
+  command = getValue(other, ':', 0);
+  other = getValue(other, ':', 1);
+  
+  string = getValue(other, '|', 0);
+  data = getValue(other, '|', 1);
+
+  //////
+  if (command == "RC") {
+    Serial.println("Remote control");
+    if (string == "IL") {
+      Serial.println("Ticker set to " + data);  
+      ticker2.attach_ms(data.toInt(), tickExternal, MAIN_MODE_NORMAL);
+      callServer("RC", "IL", "1");
+    }
+  }
+  //////
+  
+  return true;
+}
+
 boolean callToServer(String urlString) {
   if (NO_INTERNET) {
     NO_INTERNET = false;
@@ -81,12 +117,10 @@ boolean callToServer(String urlString) {
 }
 
 void pingServer() {
-  tickExternal(0);
   pingCount++;
-  callServer("P", String(pingCount), String(WiFi.RSSI()));
+  callServer("P", "", "");
+//  callServer("P", String(pingCount), String(WiFi.RSSI()));
   Serial.println("Ping");
-  delay(100);
-  tickExternal(0);
 }
 
 void callServer(String command, String string, String data) {

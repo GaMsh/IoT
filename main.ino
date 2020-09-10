@@ -3,14 +3,16 @@ void loop()
   int packetSize = udp.parsePacket();
   if (packetSize)
   {
-    char incomingPacket[255];
+    digitalWrite(BUILTIN_LED, HIGH);
+    char incomingPacket[1024];
     Serial.printf("Received %d bytes from %s, port %d\n", packetSize, udp.remoteIP().toString().c_str(), udp.remotePort());
-    int len = udp.read(incomingPacket, 255);
+    int len = udp.read(incomingPacket, 1024);
     if (len > 0)
     {
       incomingPacket[len] = 0;
     }
-    Serial.printf("Incoming UDP packet: %s\n", incomingPacket);
+    parseCommand(incomingPacket);
+    digitalWrite(BUILTIN_LED, LOW);
   }
   
   unsigned long currentMillis = millis();

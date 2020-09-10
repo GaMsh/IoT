@@ -63,7 +63,7 @@ void setup()
 
     ///// Final
     TOKEN = readCfgFile("token");
-    callServer("I", "", "");
+    callServer("I", "I", "I");
    
     ticker2.attach_ms(500, tickExternal, MAIN_MODE_OFFLINE);
 
@@ -74,12 +74,14 @@ void setup()
     tickOffAll();
 
     Wire.begin();
+
+    callServer("L", "", "i_ah42n");
   }
 
   tickOffAll();
 
   // Завершаем инициализацию устройства, регулируем яркость светодиода по конфигу
 
-  ticker1.attach_ms(2000, tickInternal);
+//  ticker1.attach_ms(2000, tickInternal);
 //  ticker2.attach_ms(6000, tickExternal, MAIN_MODE_NORMAL);
 }

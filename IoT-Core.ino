@@ -69,7 +69,7 @@ int BUFFER_COUNT = 0; // счётчик строк в буферном файл�
 
 const char* DEVICE_MODEL = "IoT";
 const char* DEVICE_REVISION = "alpha"; 
-const char* DEVICE_FIRMWARE = "0.2.7";
+const char* DEVICE_FIRMWARE = "0.3.0";
 
 const int RESET_WIFI = 0; // D3
 const int LED_EXTERNAL = 2;
